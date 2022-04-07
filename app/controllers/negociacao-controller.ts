@@ -1,4 +1,5 @@
 import { Negociacao } from "../models/negociacao.js";
+import { NegociacaoDTO } from "../models/negociacaoDTO.js";
 import { Negociacoes } from "../models/negociacoes.js";
 
 export class NegociacaoController {
@@ -16,7 +17,7 @@ export class NegociacaoController {
   adicionar(): void {
     const negociacao = this.criaNegociacao();
     this.negociacoes.adicionar(negociacao);
-    this.negociacoes.listar().pop();
+    
     console.log(this.negociacoes.listar())
     this.limparFormulario();
   }
@@ -27,7 +28,7 @@ export class NegociacaoController {
     const quantidade = parseInt(this.inputQuantidade.value);
     const valor = parseFloat(this.inputValor.value);
 
-    return new Negociacao(date, quantidade, valor);
+    return new Negociacao(new NegociacaoDTO(date, quantidade, valor));
   }
 
   limparFormulario(): void {
