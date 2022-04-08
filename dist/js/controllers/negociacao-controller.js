@@ -10,7 +10,6 @@ export class NegociacaoController {
     }
     adicionar() {
         const negociacao = this.criaNegociacao();
-        negociacao._negociacaoDTO._quantidade = 10;
         this.negociacoes.adicionar(negociacao);
         console.log(this.negociacoes.listar());
         this.limparFormulario();
