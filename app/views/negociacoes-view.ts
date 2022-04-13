@@ -22,7 +22,7 @@ export class NegociacoesView {
                     ${model.listar().map(item => {
                         return `
                             <tr>
-                                <td>${item._negociacaoDTO.data}</td>
+                                <td>${new Intl.DateTimeFormat().format(item._negociacaoDTO.data)}</td>
                                 <td>${item._negociacaoDTO._quantidade}</td>
                                 <td>${item._negociacaoDTO._valor}</td>
                             </tr>
