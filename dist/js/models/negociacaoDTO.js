@@ -5,7 +5,6 @@ export class NegociacaoDTO {
         this._valor = _valor;
     }
     get data() {
-        console.log('chamou');
         const data = new Date(this._data.getTime());
         return data;
     }
