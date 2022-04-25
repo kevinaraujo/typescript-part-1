@@ -19,17 +19,21 @@ export class NegociacaoController {
     this.negociacoesView.update(this.negociacoes);
   }
 
-  adicionar(): void {
+  public adicionar(): void {
     const negociacao = this.criaNegociacao();
-    negociacao._negociacaoDTO.data.setDate(16)
-    this.negociacoes.adicionar(negociacao);
-    
-    this.negociacoesView.update(this.negociacoes)
-    this.mensagemView.update('Negociacao adicionada com sucesso!');
-    this.limparFormulario();
+    const day = negociacao._negociacaoDTO.data.getDay();
+    if (day > 0 && day < 6) {
+      negociacao._negociacaoDTO.data.setDate(16)
+      this.negociacoes.adicionar(negociacao);
+      
+      this.atualizaView();
+      this.limparFormulario();    
+    } else {
+      this.mensagemView.update('Apenas dias úteis são aceitos.');
+    }
   }
 
-  criaNegociacao(): Negociacao {
+  private criaNegociacao(): Negociacao {
     const exp = /-/g;
     const date = new Date(this.inputData.value.replace(exp, ","));
     const quantidade = parseInt(this.inputQuantidade.value);
@@ -38,10 +42,15 @@ export class NegociacaoController {
     return new Negociacao(new NegociacaoDTO(date, quantidade, valor));
   }
 
-  limparFormulario(): void {
+  private limparFormulario(): void {
     this.inputData.value = '';
     this.inputQuantidade.value = '';
     this.inputValor.value = '';
     this.inputData.focus();
+  }
+
+  private atualizaView(): void {
+    this.negociacoesView.update(this.negociacoes)
+    this.mensagemView.update('Negociacao adicionada com sucesso!');
   }
 }
