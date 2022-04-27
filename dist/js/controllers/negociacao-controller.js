@@ -1,6 +1,5 @@
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
-import { NegociacaoDTO } from "../models/negociacaoDTO.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
@@ -15,7 +14,7 @@ export class NegociacaoController {
         this.negociacoesView.update(this.negociacoes);
     }
     adicionar() {
-        const negociacao = this.criaNegociacao();
+        const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (!this.ehDiaUtil(negociacao._negociacaoDTO.data)) {
             this.mensagemView.update('Apenas dias úteis são aceitos.');
             return;
@@ -24,13 +23,6 @@ export class NegociacaoController {
         this.negociacoes.adicionar(negociacao);
         this.atualizaView();
         this.limparFormulario();
-    }
-    criaNegociacao() {
-        const exp = /-/g;
-        const date = new Date(this.inputData.value.replace(exp, ","));
-        const quantidade = parseInt(this.inputQuantidade.value);
-        const valor = parseFloat(this.inputValor.value);
-        return new Negociacao(new NegociacaoDTO(date, quantidade, valor));
     }
     limparFormulario() {
         this.inputData.value = '';
