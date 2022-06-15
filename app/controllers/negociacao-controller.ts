@@ -3,6 +3,7 @@ import { inspect } from "../decorators/inspect.js";
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
+import { NegociacaoDTO } from "../models/negociacaoDTO.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
@@ -61,6 +62,28 @@ export class NegociacaoController {
   private atualizaView(): void {
     this.negociacoesView.update(this.negociacoes)
     this.mensagemView.update('Negociacao adicionada com sucesso!');
+  }
+
+  importaDados(): void {
+    fetch('http://localhost:8081/dados')
+    .then((res) => res.json())
+    .then((data: any[]) => {
+      return data.map(dado => {
+        return new Negociacao(
+          new NegociacaoDTO(
+            new Date(), 
+            dado.vezes, 
+            dado.montante
+          )
+        )
+      })
+    })
+    .then(negociacoesDeHoje => {
+      for(let negociacao of negociacoesDeHoje) {
+        this.negociacoes.adicionar(negociacao);
+      }
+      this.negociacoesView.update(this.negociacoes);
+    })
   }
 
   private ehDiaUtil(data: Date) {
