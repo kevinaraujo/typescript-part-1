@@ -47,9 +47,10 @@ export class NegociacaoController {
       return;
     }
 
-    negociacao._negociacaoDTO.data.setDate(16)
+   
     this.negociacoes.adicionar(negociacao);
-    
+    console.log(negociacao.paraTexto())
+    console.log(this.negociacoes.paraTexto())
     this.atualizaView();
     this.limparFormulario();    
   }
@@ -66,7 +67,7 @@ export class NegociacaoController {
     this.mensagemView.update('Negociacao adicionada com sucesso!');
   }
 
-  importaDados(): void {
+  public importaDados(): void {
     this.negociacoesService
       .obterNegociacoesDoDia()
       .then(negociacoesDeHoje => {
