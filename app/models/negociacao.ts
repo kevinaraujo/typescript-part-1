@@ -1,6 +1,7 @@
+import { Imprimivel } from "../util/imprimivel.js";
 import { NegociacaoDTO } from "./negociacaoDTO.js";
 
-export class Negociacao {
+export class Negociacao implements Imprimivel{
   constructor(
     public readonly _negociacaoDTO: NegociacaoDTO
   ) {}
