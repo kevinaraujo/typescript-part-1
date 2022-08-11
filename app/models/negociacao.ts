@@ -26,4 +26,10 @@ export class Negociacao implements Imprimivel{
       Valor: ${this._negociacaoDTO._valor}
     `
   }
+
+  public ehIgual(negociacao: Negociacao):boolean {
+    return this._negociacaoDTO.data.getDate() === negociacao._negociacaoDTO.data.getDate()
+      && this._negociacaoDTO.data.getMonth() ===  negociacao._negociacaoDTO.data.getMonth()
+      && this._negociacaoDTO.data.getFullYear() ===  negociacao._negociacaoDTO.data.getFullYear()
+  }
 }
